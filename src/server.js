@@ -11,6 +11,7 @@ const logger = require('./middleware/logger.js');
 const validator = require('./middleware/validator.js');
 const error404 = require('./error-handlers/404.js');
 const error500 = require('./error-handlers/500.js');
+const {postFood} = require('./routes/food.js');
 
 app.use(express.json());
 app.use(logger);
@@ -26,13 +27,13 @@ app.get('/food', async (request, response) => {
 app.get('/food/:id', () => {});
 
 // CREATES FOOD ITEM
-app.post('/food/', () => {});
+app.post('/food', postFood);
 
 // FINDS AND UPDATES FOOD ITEM
 app.put('/food/:id', () => {});
 
 // FINDS AND DELETES FOOD ITEM
-app.delete('/food/:id', () => {});
+app.delete('/food/:id');
 
 app.use(error404);
 // app.use(error500);

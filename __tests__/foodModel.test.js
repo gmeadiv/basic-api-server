@@ -10,7 +10,7 @@ afterAll(async () => {
   await db.drop();
 });
 
-xdescribe('Testing sequelize model', () => {
+describe('Testing sequelize model', () => {
   it('Should be able to create a food item', async () => {
     let newFood = await food.create({
       food: 'some food',

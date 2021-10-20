@@ -1,5 +1,10 @@
 'use strict';
 
 const app = require('./src/server.js');
+const { db } = require('./src/models/index.js');
 
-app.start;
+db.sync()
+  .then(() => {
+    app.start;
+  })
+  .catch(console.error);
