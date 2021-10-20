@@ -5,8 +5,6 @@ const { food } = require('../models/index.js');
 async function findFood(request, response) {
   const id = parseInt(request.params.id);
 
-
-
   try {
     const foundFood = await food.findOne({where: {id}});
     response.send(foundFood);
@@ -28,9 +26,12 @@ async function deleteFood(request, response) {
   const id = parseInt(request.params.id);
 
   try {
-    await food.destroy(request.params);
-    console.log('FOOD DESTROYED');
-  } catch (error) {console.log('NO FOOD TO DELETE');}
+    const foundFood = await food.findOne({where: {id}});
+    console.log(foundFood, '<-- EXISTS -<<');
+    food.destroy({where: {id}});
+    console.log(foundFood, 'FOOD DESTROYED');
+    response.status(200).send(200)
+  } catch (error) {console.log('NO FOOD FOUND');}
 }
 
 module.exports = {postFood, deleteFood, findFood};
