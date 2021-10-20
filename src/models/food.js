@@ -1,7 +1,7 @@
 'use strict';
 
-const Phrase = (sequelize, DataTypes) => sequelize.define('Phrase', {
-  words: {
+const Food = (sequelize, DataTypes) => sequelize.define('Food', {
+  food: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -11,4 +11,4 @@ const Phrase = (sequelize, DataTypes) => sequelize.define('Phrase', {
   },
 });
 
-module.exports = Phrase;
+module.exports = Food;

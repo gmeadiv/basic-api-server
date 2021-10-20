@@ -1,8 +1,8 @@
 'use strict';
 
-const { db } = require('../models');
+const { db } = require('../src/models');
 const supertest = require('supertest');
-const app = require('../app');
+const app = require('../src/server');
 const request = supertest(app.server);
 
 beforeAll(async () => {
@@ -14,10 +14,10 @@ afterAll(async () => {
 });
 
 describe('Testing our express server', () => {
-  it('should fetch all phrases on GET /Phrase', async () => {
-    const response = await request.get('/phrase');
+  it('should fetch all food items on GET /food', async () => {
+    const response = await request.get('/food');
 
     expect(response.status).toBe(200);
-    expect(response.body.length).toBe(0)
+    expect(response.body.length).toBe(0);
   });
 });
