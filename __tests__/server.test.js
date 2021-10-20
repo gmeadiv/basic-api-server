@@ -13,7 +13,7 @@ afterAll(async () => {
   await db.drop();
 });
 
-xdescribe('Testing our express server', () => {
+describe('Testing our express server', () => {
   it('should fetch all food items on GET /food', async () => {
     const response = await request.get('/food');
 
