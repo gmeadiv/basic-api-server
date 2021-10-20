@@ -5,14 +5,11 @@ const { food } = require('../models/index.js');
 async function findFood(request, response) {
   const id = parseInt(request.params.id);
 
+
+
   try {
-    const foundFood = await food.findAll({});
-    foundFood.map(item => {
-      if (item.id === id) {
-        response.send(item);
-        console.log(item, '<-- HERE\'S YOUR BOOK -<<');
-      }
-    });
+    const foundFood = await food.findOne({where: {id}});
+    response.send(foundFood);
   } catch (error) {console.log('NO FOOD FOUND');}
 }
 
@@ -28,7 +25,12 @@ async function postFood(request, response) {
 }
 
 async function deleteFood(request, response) {
-  console.log(request, '<-- DELETE REQUEST -<<');
+  const id = parseInt(request.params.id);
+
+  try {
+    await food.destroy(request.params);
+    console.log('FOOD DESTROYED');
+  } catch (error) {console.log('NO FOOD TO DELETE');}
 }
 
 module.exports = {postFood, deleteFood, findFood};
