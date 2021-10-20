@@ -33,7 +33,7 @@ app.post('/food', handleFoodFunctions.postFood);
 app.delete('/food/:id', handleFoodFunctions.deleteFood);
 
 // FINDS AND UPDATES FOOD ITEM
-app.put('/food/:id', () => {});
+app.put('/food/:id', handleFoodFunctions.putFood);
 
 app.use(error404);
 // app.use(error500);
