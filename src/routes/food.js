@@ -7,7 +7,16 @@ async function findFood(request, response) {
 
   try {
     const foundFood = await food.findOne({where: {id}});
-    response.send(foundFood);
+    console.log(foundFood);
+
+    if (foundFood === null) {
+      response.status(500).send('NO FOOD FOUND');
+      console.log('NO FOOD FOUND');
+    } else {
+      response.send(foundFood);
+      console.log(foundFood);
+    }
+
   } catch (error) {console.log('NO FOOD FOUND');}
 }
 
