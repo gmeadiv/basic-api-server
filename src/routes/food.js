@@ -3,9 +3,11 @@
 const { food } = require('../models/index.js');
 
 async function findFood(request, response) {
+
   const id = parseInt(request.params.id);
 
   try {
+
     const foundFood = await food.findOne({ where: { id } });
     console.log(foundFood);
 
@@ -17,21 +19,30 @@ async function findFood(request, response) {
       console.log(foundFood);
     }
 
-  } catch (error) { console.log('NO FOOD FOUND'); }
+  } catch (error) {
+    response.status(400).send('FIND FOOD ERROR'); 
+    console.log('NO FOOD FOUND'); 
+  }
+
 }
 
 async function postFood(request, response) {
+
   try {
-    console.log(request.body, '<-- POST REQUEST DOT BODY -<<');
+
     const foodInfo = request.body;
     const newFood = await food.create(foodInfo);
-    console.log(newFood.id, '<-- NEW FOOD ID -<<');
+
+    response.send(newFood);
   } catch (error) {
-    console.log('POST FOOD ERROR');
+    response.status(400).send('POST FOOD ERROR'); 
+    console.log('POST FOOD ERROR'); 
   }
+
 }
 
 async function deleteFood(request, response) {
+
   const id = parseInt(request.params.id);
 
   try {
@@ -39,31 +50,40 @@ async function deleteFood(request, response) {
     console.log(foundFood, '<-- EXISTS -<<');
     food.destroy({ where: { id } });
     console.log(foundFood, 'FOOD DESTROYED');
-    response.status(200).send(200)
-  } catch (error) { console.log('NO FOOD FOUND'); }
+    response.status(200).send(200);
+
+  } catch (error) {
+    response.status(400).send('DELETE FOOD ERROR'); 
+    console.log('NO FOOD FOUND'); 
+  }
+
 }
 
 async function putFood(request, response) {
-  const id = request.params.id;
+
+  const id = parseInt(request.params.id);
   const info = request.body;
 
   try {
-    const foodToUpdate = await food.findOne({where: {id}})
-      .on('success', (food) => {
-        if (food) {
-          food.update({
-            food: info.food,
-            title: info.title,
-          })
-            .success(() => {});
-        }
-      });
-    
-    console.log(foodToUpdate, '<-- UPDATED FOOD -<<');
 
+    await food.update(
+
+      {
+        food: info.food,
+        title: info.title,
+      },
+      {
+        where: {id},
+      });
+
+    const foundFood = await food.findOne({ where: { id } });
+    response.send(foundFood);
+    
   } catch (error) {
+
     response.status(400).send('PUT FOOD ERROR');
     console.log('PUT FOOD ERROR');
+
   }
 }
 
